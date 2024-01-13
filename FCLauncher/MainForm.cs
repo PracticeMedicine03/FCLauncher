@@ -12,6 +12,7 @@ using Lambdagon.FCLauncher.Core.CommandLine;
 
 // CefSharp has been replaced by Microsoft Edge WebView2
 using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.WinForms;
 
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -69,20 +72,50 @@ namespace FCLauncher
             }
         }
 
-        async void InitializeAsync()
+        private void InitializeWebView2()
         {
-            await modUpdateWebView.EnsureCoreWebView2Async(null);
+            // https://stackoverflow.com/questions/73840363/how-do-i-capture-text-from-a-html-element-given-its-id-from-a-webview2-in-vb/73846538#73846538
+            IntializeCoreWebView2Async(modUpdateWebView, null);
+        }
+
+        // https://stackoverflow.com/questions/73840363/how-do-i-capture-text-from-a-html-element-given-its-id-from-a-webview2-in-vb/73846538#73846538
+        private async void IntializeCoreWebView2Async(WebView2 wv, string userDataFolder)
+        {
+            CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions();
+            CoreWebView2Environment webView2Environment = await CoreWebView2Environment.CreateAsync(null, userDataFolder, options);
+
+            if (string.IsNullOrEmpty(userDataFolder))
+            {
+                userDataFolder = Path.Combine(Path.GetTempPath(),
+                    Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location));
+            }
+            
+            await wv.EnsureCoreWebView2Async(webView2Environment);
+
+            LauncherConsole.WriteLineBlue($"[FCLAUNCHER WEBVIEW2] UserDataFolder has been set to: {userDataFolder}");
+            lblStatus.Text = $"UserDataFolder has been set to: {userDataFolder}";
+
+            LauncherConsole.WriteLineDarkBlue("[FCLAUNCHER WEBVIEW2] Loading the FC wiki page...");
+            lblStatus.Text = "Loading the FC wiki page...";
+
+            try
+            {
+                wv.CoreWebView2.Navigate("https://github.com/Lambdagon/fc/wiki");
+                LauncherConsole.WriteLineSuccess("[FCLAUNCHER WEBVIEW2] Loaded the FC wiki page!");
+                lblStatus.Text = "Loaded the FC wiki page!";
+            }
+            catch (Exception ex)
+            {
+                LauncherConsole.WriteLineError(1, "[FCLAUNCHER WEBVIEW2 ERROR] An exception has occured while loading the wiki page.");
+                LauncherConsole.WriteLineError(1, "[FCLAUNCHER WEBVIEW2 ERROR] Exception details below this line.");
+                LauncherConsole.WriteLineWarning(1, "-----------------------------------------------------------------");
+                LauncherConsole.WriteLineError(6, $"{ex.InnerException}\n{ex.Message}\n{ex.StackTrace}\n{ex.Source}");
+            }
         }
         
         private void FinalInitialization()
         {
-            InitializeAsync();
-            
-            if (modUpdateWebView != null && modUpdateWebView.CoreWebView2 != null)
-            {
-                modUpdateWebView.CoreWebView2.Navigate("https://lambdagon.github.io/fc_website/index.html");
-                modUpdateWebView.CoreWebView2.OpenDevToolsWindow();
-            }
+            InitializeWebView2();
 
             if (!File.Exists("./launcher_cfg.txt"))
             {
@@ -98,6 +131,8 @@ namespace FCLauncher
             }
 
             Core.InitializeCore();
+
+            lblStatus.Text = "Ready!";
         }
         
 #if ENABLE_CEF_MENU
@@ -280,6 +315,11 @@ namespace FCLauncher
                 // writer.WriteLine("}");
                 writer.Close();
             }
+        }
+
+        private void btnDevTools_Click(object sender, EventArgs e)
+        {
+            modUpdateWebView.CoreWebView2.OpenDevToolsWindow();
         }
     }
 }
