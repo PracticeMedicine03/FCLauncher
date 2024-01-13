@@ -55,7 +55,7 @@ namespace FCLauncher
                 updateButton.Enabled = false;
             }
 
-            modUpdateWebView.NavigationStarting += EnsureIsHTTPS;
+            wikiWebView.NavigationStarting += EnsureIsHTTPS;
             
             FinalInitialization();
         }
@@ -72,14 +72,14 @@ namespace FCLauncher
             }
         }
 
-        private void InitializeWebView2()
-        {
-            // https://stackoverflow.com/questions/73840363/how-do-i-capture-text-from-a-html-element-given-its-id-from-a-webview2-in-vb/73846538#73846538
-            IntializeCoreWebView2Async(modUpdateWebView, null);
-        }
+        // private void InitializeWebView2()
+        // {
+        //     // https://stackoverflow.com/questions/73840363/how-do-i-capture-text-from-a-html-element-given-its-id-from-a-webview2-in-vb/73846538#73846538
+        //     IntializeCoreWebView2Async(wikiWebView, "https://github.com/Lambdagon/fc/wiki",null);
+        // }
 
         // https://stackoverflow.com/questions/73840363/how-do-i-capture-text-from-a-html-element-given-its-id-from-a-webview2-in-vb/73846538#73846538
-        private async void IntializeCoreWebView2Async(WebView2 wv, string userDataFolder)
+        private async void IntializeCoreWebView2Async(WebView2 wv, string url, string userDataFolder)
         {
             CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions();
             CoreWebView2Environment webView2Environment = await CoreWebView2Environment.CreateAsync(null, userDataFolder, options);
@@ -95,14 +95,14 @@ namespace FCLauncher
             LauncherConsole.WriteLineBlue($"[FCLAUNCHER WEBVIEW2] UserDataFolder has been set to: {userDataFolder}");
             lblStatus.Text = $"UserDataFolder has been set to: {userDataFolder}";
 
-            LauncherConsole.WriteLineDarkBlue("[FCLAUNCHER WEBVIEW2] Loading the FC wiki page...");
-            lblStatus.Text = "Loading the FC wiki page...";
+            LauncherConsole.WriteLineDarkBlue($"[FCLAUNCHER WEBVIEW2] Loading {wv}...");
+            lblStatus.Text = $"Loading {wv}";
 
             try
             {
-                wv.CoreWebView2.Navigate("https://github.com/Lambdagon/fc/wiki");
-                LauncherConsole.WriteLineSuccess("[FCLAUNCHER WEBVIEW2] Loaded the FC wiki page!");
-                lblStatus.Text = "Loaded the FC wiki page!";
+                wv.CoreWebView2.Navigate(url);
+                LauncherConsole.WriteLineSuccess($"[FCLAUNCHER WEBVIEW2] Loaded {wv}!");
+                lblStatus.Text = $"Loaded {wv}!";
             }
             catch (Exception ex)
             {
@@ -111,11 +111,14 @@ namespace FCLauncher
                 LauncherConsole.WriteLineWarning(1, "-----------------------------------------------------------------");
                 LauncherConsole.WriteLineError(6, $"{ex.InnerException}\n{ex.Message}\n{ex.StackTrace}\n{ex.Source}");
             }
+            
+            lblStatus.Text = "Ready!";
         }
         
         private void FinalInitialization()
         {
-            InitializeWebView2();
+            // InitializeWebView2();
+            IntializeCoreWebView2Async(wikiWebView, "https://github.com/Lambdagon/fc/wiki",null);
 
             if (!File.Exists("./launcher_cfg.txt"))
             {
@@ -319,7 +322,12 @@ namespace FCLauncher
 
         private void btnDevTools_Click(object sender, EventArgs e)
         {
-            modUpdateWebView.CoreWebView2.OpenDevToolsWindow();
+            wikiWebView.CoreWebView2.OpenDevToolsWindow();
+        }
+
+        private void btnReportIssue_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/Lambdagon/fc/issues");
         }
     }
 }

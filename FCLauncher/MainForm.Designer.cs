@@ -31,21 +31,22 @@
             this.pContainer = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.modUpdateWebView = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.wikiWebView = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.menuTabControl = new System.Windows.Forms.TabControl();
             this.mainPage = new System.Windows.Forms.TabPage();
+            this.btnReportIssue = new System.Windows.Forms.Button();
             this.updateButton = new System.Windows.Forms.Button();
             this.launchButton = new System.Windows.Forms.Button();
             this.wikiPage = new System.Windows.Forms.TabPage();
             this.settingsPage = new System.Windows.Forms.TabPage();
+            this.lblDevSettings = new System.Windows.Forms.Label();
+            this.btnDevTools = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
             this.launchBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnDevTools = new System.Windows.Forms.Button();
-            this.lblDevSettings = new System.Windows.Forms.Label();
             this.pContainer.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.modUpdateWebView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wikiWebView)).BeginInit();
             this.menuTabControl.SuspendLayout();
             this.mainPage.SuspendLayout();
             this.wikiPage.SuspendLayout();
@@ -76,17 +77,17 @@
             this.lblStatus.Size = new System.Drawing.Size(60, 17);
             this.lblStatus.Text = "HeroBrine";
             // 
-            // modUpdateWebView
+            // wikiWebView
             // 
-            this.modUpdateWebView.AllowExternalDrop = true;
-            this.modUpdateWebView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.modUpdateWebView.CreationProperties = null;
-            this.modUpdateWebView.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.modUpdateWebView.Location = new System.Drawing.Point(0, 0);
-            this.modUpdateWebView.Name = "modUpdateWebView";
-            this.modUpdateWebView.Size = new System.Drawing.Size(1088, 478);
-            this.modUpdateWebView.TabIndex = 2;
-            this.modUpdateWebView.ZoomFactor = 1D;
+            this.wikiWebView.AllowExternalDrop = true;
+            this.wikiWebView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.wikiWebView.CreationProperties = null;
+            this.wikiWebView.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.wikiWebView.Location = new System.Drawing.Point(0, 0);
+            this.wikiWebView.Name = "wikiWebView";
+            this.wikiWebView.Size = new System.Drawing.Size(1088, 478);
+            this.wikiWebView.TabIndex = 2;
+            this.wikiWebView.ZoomFactor = 1D;
             // 
             // menuTabControl
             // 
@@ -102,6 +103,7 @@
             // 
             // mainPage
             // 
+            this.mainPage.Controls.Add(this.btnReportIssue);
             this.mainPage.Controls.Add(this.updateButton);
             this.mainPage.Controls.Add(this.launchButton);
             this.mainPage.Location = new System.Drawing.Point(4, 22);
@@ -111,6 +113,16 @@
             this.mainPage.TabIndex = 0;
             this.mainPage.Text = "Menu";
             this.mainPage.UseVisualStyleBackColor = true;
+            // 
+            // btnReportIssue
+            // 
+            this.btnReportIssue.Location = new System.Drawing.Point(193, 51);
+            this.btnReportIssue.Name = "btnReportIssue";
+            this.btnReportIssue.Size = new System.Drawing.Size(95, 23);
+            this.btnReportIssue.TabIndex = 2;
+            this.btnReportIssue.Text = "Report an issue";
+            this.btnReportIssue.UseVisualStyleBackColor = true;
+            this.btnReportIssue.Click += new System.EventHandler(this.btnReportIssue_Click);
             // 
             // updateButton
             // 
@@ -134,7 +146,7 @@
             // 
             // wikiPage
             // 
-            this.wikiPage.Controls.Add(this.modUpdateWebView);
+            this.wikiPage.Controls.Add(this.wikiWebView);
             this.wikiPage.Location = new System.Drawing.Point(4, 22);
             this.wikiPage.Name = "wikiPage";
             this.wikiPage.Padding = new System.Windows.Forms.Padding(3);
@@ -157,6 +169,24 @@
             this.settingsPage.TabIndex = 2;
             this.settingsPage.Text = "Settings";
             this.settingsPage.UseVisualStyleBackColor = true;
+            // 
+            // lblDevSettings
+            // 
+            this.lblDevSettings.Location = new System.Drawing.Point(8, 15);
+            this.lblDevSettings.Name = "lblDevSettings";
+            this.lblDevSettings.Size = new System.Drawing.Size(198, 14);
+            this.lblDevSettings.TabIndex = 6;
+            this.lblDevSettings.Text = "Developer Settings";
+            // 
+            // btnDevTools
+            // 
+            this.btnDevTools.Location = new System.Drawing.Point(7, 32);
+            this.btnDevTools.Name = "btnDevTools";
+            this.btnDevTools.Size = new System.Drawing.Size(152, 23);
+            this.btnDevTools.TabIndex = 5;
+            this.btnDevTools.Text = "Open WebView2 DevTools";
+            this.btnDevTools.UseVisualStyleBackColor = true;
+            this.btnDevTools.Click += new System.EventHandler(this.btnDevTools_Click);
             // 
             // btnSaveConfig
             // 
@@ -183,24 +213,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Extra launch arguments";
             // 
-            // btnDevTools
-            // 
-            this.btnDevTools.Location = new System.Drawing.Point(7, 32);
-            this.btnDevTools.Name = "btnDevTools";
-            this.btnDevTools.Size = new System.Drawing.Size(152, 23);
-            this.btnDevTools.TabIndex = 5;
-            this.btnDevTools.Text = "Open WebView2 DevTools";
-            this.btnDevTools.UseVisualStyleBackColor = true;
-            this.btnDevTools.Click += new System.EventHandler(this.btnDevTools_Click);
-            // 
-            // lblDevSettings
-            // 
-            this.lblDevSettings.Location = new System.Drawing.Point(8, 15);
-            this.lblDevSettings.Name = "lblDevSettings";
-            this.lblDevSettings.Size = new System.Drawing.Size(198, 14);
-            this.lblDevSettings.TabIndex = 6;
-            this.lblDevSettings.Text = "Developer Settings";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -215,7 +227,7 @@
             this.pContainer.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.modUpdateWebView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wikiWebView)).EndInit();
             this.menuTabControl.ResumeLayout(false);
             this.mainPage.ResumeLayout(false);
             this.wikiPage.ResumeLayout(false);
@@ -224,6 +236,8 @@
             this.ResumeLayout(false);
         }
 
+        private System.Windows.Forms.Button btnReportIssue;
+
         private System.Windows.Forms.Button btnDevTools;
         private System.Windows.Forms.Label lblDevSettings;
 
@@ -231,7 +245,7 @@
 
         private System.Windows.Forms.Button btnSaveConfig;
 
-        private Microsoft.Web.WebView2.WinForms.WebView2 modUpdateWebView;
+        private Microsoft.Web.WebView2.WinForms.WebView2 wikiWebView;
 
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
 
