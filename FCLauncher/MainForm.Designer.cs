@@ -34,7 +34,8 @@
             this.wikiWebView = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.menuTabControl = new System.Windows.Forms.TabControl();
             this.mainPage = new System.Windows.Forms.TabPage();
-            this.btnReportIssue = new System.Windows.Forms.Button();
+            this.btnReportIssueLauncher = new System.Windows.Forms.Button();
+            this.btnReportIssueMod = new System.Windows.Forms.Button();
             this.updateButton = new System.Windows.Forms.Button();
             this.launchButton = new System.Windows.Forms.Button();
             this.wikiPage = new System.Windows.Forms.TabPage();
@@ -103,7 +104,8 @@
             // 
             // mainPage
             // 
-            this.mainPage.Controls.Add(this.btnReportIssue);
+            this.mainPage.Controls.Add(this.btnReportIssueLauncher);
+            this.mainPage.Controls.Add(this.btnReportIssueMod);
             this.mainPage.Controls.Add(this.updateButton);
             this.mainPage.Controls.Add(this.launchButton);
             this.mainPage.Location = new System.Drawing.Point(4, 22);
@@ -114,15 +116,24 @@
             this.mainPage.Text = "Menu";
             this.mainPage.UseVisualStyleBackColor = true;
             // 
-            // btnReportIssue
+            // btnReportIssueLauncher
             // 
-            this.btnReportIssue.Location = new System.Drawing.Point(193, 51);
-            this.btnReportIssue.Name = "btnReportIssue";
-            this.btnReportIssue.Size = new System.Drawing.Size(95, 23);
-            this.btnReportIssue.TabIndex = 2;
-            this.btnReportIssue.Text = "Report an issue";
-            this.btnReportIssue.UseVisualStyleBackColor = true;
-            this.btnReportIssue.Click += new System.EventHandler(this.btnReportIssue_Click);
+            this.btnReportIssueLauncher.Location = new System.Drawing.Point(54, 227);
+            this.btnReportIssueLauncher.Name = "btnReportIssueLauncher";
+            this.btnReportIssueLauncher.Size = new System.Drawing.Size(161, 23);
+            this.btnReportIssueLauncher.TabIndex = 3;
+            this.btnReportIssueLauncher.Text = "Report an issue (FCLauncher)\r\n";
+            this.btnReportIssueLauncher.UseVisualStyleBackColor = true;
+            // 
+            // btnReportIssueMod
+            // 
+            this.btnReportIssueMod.Location = new System.Drawing.Point(54, 158);
+            this.btnReportIssueMod.Name = "btnReportIssueMod";
+            this.btnReportIssueMod.Size = new System.Drawing.Size(95, 23);
+            this.btnReportIssueMod.TabIndex = 2;
+            this.btnReportIssueMod.Text = "Report an issue";
+            this.btnReportIssueMod.UseVisualStyleBackColor = true;
+            this.btnReportIssueMod.Click += new System.EventHandler(this.btnReportIssue_Click);
             // 
             // updateButton
             // 
@@ -236,7 +247,9 @@
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.Button btnReportIssue;
+        private System.Windows.Forms.Button btnReportIssueLauncher;
+
+        private System.Windows.Forms.Button btnReportIssueMod;
 
         private System.Windows.Forms.Button btnDevTools;
         private System.Windows.Forms.Label lblDevSettings;

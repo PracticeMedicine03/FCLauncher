@@ -258,7 +258,7 @@ namespace FCLauncher
             else if (launchBox.Text.Contains("-dev"))
             {
                 DialogResult developerMode = MessageBox.Show(
-                    "You are trying to run Fortress Connected with -dev on your extra launch arguments.\nThis means that your running FC with developer mode and may grant you access to developer only convars\nthat can break the game.\nAre you sure do you want to run the mod with developer mode?\n(It is recommended to run the mod normally)",
+                    "You are trying to run Fortress Connected with -dev on your extra launch arguments.\nThis means that your trying running FC with developer mode and may grant you access to developer only convars\nthat can break the game.\nAre you sure do you want to run the mod with developer mode?\n(It is recommended to run the mod normally)",
                     "FCLauncher", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (developerMode == DialogResult.Yes)
                 {
@@ -328,6 +328,11 @@ namespace FCLauncher
         private void btnReportIssue_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/Lambdagon/fc/issues");
+        }
+
+        private void btnReportIssueLauncher_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/PracticeMedicine03/FCLauncher/issues");
         }
     }
 }
