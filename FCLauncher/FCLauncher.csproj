@@ -119,10 +119,6 @@
       <Project>{1840d4e1-5523-4ede-a988-138e5117ac31}</Project>
       <Name>Lambdagon.FCLauncher.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lambdagon.FCLauncher\Lambdagon.FCLauncher.csproj">
-      <Project>{87c293ed-3ed4-4713-add1-30a60b0581df}</Project>
-      <Name>Lambdagon.FCLauncher</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PracticeMedicine.SourceModInstaller\PracticeMedicine.SourceModInstaller.csproj">
       <Project>{810965ed-8ea4-4a3c-8366-9fd194e96acd}</Project>
       <Name>PracticeMedicine.SourceModInstaller</Name>

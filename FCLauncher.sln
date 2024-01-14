@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCLauncher", "FCLauncher\FC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lambdagon.FCLauncher.Core", "Lambdagon.FCLauncher.Core\Lambdagon.FCLauncher.Core.csproj", "{1840D4E1-5523-4EDE-A988-138E5117AC31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lambdagon.FCLauncher", "Lambdagon.FCLauncher\Lambdagon.FCLauncher.csproj", "{87C293ED-3ED4-4713-ADD1-30A60B0581DF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeMedicine.SourceModInstaller", "PracticeMedicine.SourceModInstaller\PracticeMedicine.SourceModInstaller.csproj", "{810965ED-8EA4-4A3C-8366-9FD194E96ACD}"
 EndProject
 Global
@@ -34,13 +32,6 @@ Global
 		{1840D4E1-5523-4EDE-A988-138E5117AC31}.Release|x86.ActiveCfg = Release|x86
 		{1840D4E1-5523-4EDE-A988-138E5117AC31}.Release|x86.Build.0 = Release|x86
 		{1840D4E1-5523-4EDE-A988-138E5117AC31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87C293ED-3ED4-4713-ADD1-30A60B0581DF}.Debug|x86.ActiveCfg = Debug|x86
-		{87C293ED-3ED4-4713-ADD1-30A60B0581DF}.Debug|x86.Build.0 = Debug|x86
-		{87C293ED-3ED4-4713-ADD1-30A60B0581DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87C293ED-3ED4-4713-ADD1-30A60B0581DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87C293ED-3ED4-4713-ADD1-30A60B0581DF}.Release|x86.ActiveCfg = Release|x86
-		{87C293ED-3ED4-4713-ADD1-30A60B0581DF}.Release|x86.Build.0 = Release|x86
-		{87C293ED-3ED4-4713-ADD1-30A60B0581DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{810965ED-8EA4-4A3C-8366-9FD194E96ACD}.Debug|x86.ActiveCfg = Debug|x86
 		{810965ED-8EA4-4A3C-8366-9FD194E96ACD}.Debug|x86.Build.0 = Debug|x86
 		{810965ED-8EA4-4A3C-8366-9FD194E96ACD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
