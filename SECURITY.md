@@ -6,7 +6,7 @@ Supported FCLauncher versions and currently provided with security updates
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.0.0.x   | :white_check_mark: |
+| 1.0.x   | :white_check_mark: |
 
 
 ## Reporting a Vulnerability
@@ -41,3 +41,6 @@ Please immediately report it on the FC discord server or make an issue on the [F
 ![image](https://github.com/PracticeMedicine03/FCLauncher/assets/102203580/d7a51162-6e04-43e3-8474-0e49aad1f684)
 
 **Note that if one of the developer or professionals ask you a question, answer them. Even they're not from the developer team, they can still help you.**
+
+**Alternatively, you can contact jef.hm_. or lambdagon on Discord**
+**Join [PracticeMedicine's Discord Server](https://discord.ggWSyxgv7xf6) or check the repository's Discussions page for announcements**
