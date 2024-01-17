@@ -43,4 +43,5 @@ Please immediately report it on the FC discord server or make an issue on the [F
 **Note that if one of the developer or professionals ask you a question, answer them. Even they're not from the developer team, they can still help you.**
 
 **Alternatively, you can contact jef.hm_. or lambdagon on Discord**
+
 **Join [PracticeMedicine's Discord Server](https://discord.ggWSyxgv7xf6) or check the repository's Discussions page for announcements**
