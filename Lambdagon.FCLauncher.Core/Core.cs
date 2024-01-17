@@ -85,7 +85,7 @@ namespace Lambdagon.FCLauncher.Core
             if (!File.Exists(MainModPath))
             {
                 GameInfoExists = false;
-                LauncherConsole.WriteLineWarning(5,"[FCLAUNCHER CORE] GameInfo.txt doesn't exist. Please make sure that the launcher is placed on the root of the mod directory.");
+                LauncherConsole.WriteLineWarning(5,"[FCLAUNCHER CORE] GameInfo.txt doesn't exist. Please make sure that the launcher is placed on the root of the mod directory.", true);
             }
             else
             {
@@ -119,7 +119,7 @@ namespace Lambdagon.FCLauncher.Core
             }
             else
             {
-                LauncherConsole.WriteLineError(4,"[FCLAUNCHER CORE] Cannot install FC because Fortress Connected already exists. To update, click the 'Update FC' Button.");
+                LauncherConsole.WriteLineError(4,"[FCLAUNCHER CORE] Cannot install FC because Fortress Connected already exists. To update, click the 'Update FC' Button.", true);
                 MessageBox.Show(
                     "Cannot install FC because Fortress Connected is already installed.\n(The launcher must be placed on the root of the 'fc' directory.)",
                     "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -130,7 +130,7 @@ namespace Lambdagon.FCLauncher.Core
         { 
             if(!IsModGameInfoTxtExist())
             {
-                LauncherConsole.WriteLineError(4,"[FCLAUNCHER CORE] Cannot update FC because Fortress Connected is NOT installed. Installing FC will give the exact latest version.");
+                LauncherConsole.WriteLineError(4,"[FCLAUNCHER CORE] Cannot update FC because Fortress Connected is NOT installed. Installing FC will give the exact latest version.", false);
                 MessageBox.Show(
                     "Cannot update FC because Fortress Connected is NOT installed. Installing FC will give the exact latest version.\n(The launcher must be placed on the root of the 'fc' directory.)",
                     "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);

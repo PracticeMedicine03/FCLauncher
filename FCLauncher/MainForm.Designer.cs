@@ -56,7 +56,9 @@
             // 
             // pContainer
             // 
-            this.pContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.pContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pContainer.Controls.Add(this.statusStrip1);
             this.pContainer.Location = new System.Drawing.Point(-1, -2);
             this.pContainer.Name = "pContainer";
@@ -65,7 +67,8 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.lblStatus });
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 542);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1093, 22);
@@ -81,7 +84,9 @@
             // wikiWebView
             // 
             this.wikiWebView.AllowExternalDrop = true;
-            this.wikiWebView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.wikiWebView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.wikiWebView.CreationProperties = null;
             this.wikiWebView.DefaultBackgroundColor = System.Drawing.Color.White;
             this.wikiWebView.Location = new System.Drawing.Point(0, 0);
@@ -92,11 +97,13 @@
             // 
             // menuTabControl
             // 
-            this.menuTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.menuTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.menuTabControl.Controls.Add(this.mainPage);
             this.menuTabControl.Controls.Add(this.wikiPage);
             this.menuTabControl.Controls.Add(this.settingsPage);
-            this.menuTabControl.Location = new System.Drawing.Point(0, 35);
+            this.menuTabControl.Location = new System.Drawing.Point(0, 37);
             this.menuTabControl.Name = "menuTabControl";
             this.menuTabControl.SelectedIndex = 0;
             this.menuTabControl.Size = new System.Drawing.Size(1092, 510);
@@ -147,7 +154,7 @@
             // 
             // launchButton
             // 
-            this.launchButton.Location = new System.Drawing.Point(54, 51);
+            this.launchButton.Location = new System.Drawing.Point(54, 49);
             this.launchButton.Name = "launchButton";
             this.launchButton.Size = new System.Drawing.Size(75, 23);
             this.launchButton.TabIndex = 0;
@@ -245,6 +252,7 @@
             this.settingsPage.ResumeLayout(false);
             this.settingsPage.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         private System.Windows.Forms.Button btnReportIssueLauncher;

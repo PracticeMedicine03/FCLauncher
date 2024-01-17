@@ -28,7 +28,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+// FCLauncher class library
 using Lambdagon.FCLauncher.Core.Functions;
+
+// PracticeMedicine's SourceMod Installer library
 using PracticeMedicine.SourceModInstaller;
 
 namespace FCLauncher
@@ -79,7 +83,19 @@ namespace FCLauncher
         // }
 
         // https://stackoverflow.com/questions/73840363/how-do-i-capture-text-from-a-html-element-given-its-id-from-a-webview2-in-vb/73846538#73846538
-        private async void IntializeCoreWebView2Async(WebView2 wv, string url, string userDataFolder)
+        /// <summary>
+        /// Initialize the Core of the Microsoft Edge WebView2 control.
+        /// (Optional, if you want to display a webpage on FCLauncher you can use this function.)
+        /// The StackOverflow solution is written on Visual Basic. It is recommended that you copy
+        /// FCLauncher's WebView2 fix if your planning to use the fix on C#
+        /// The reason why this function is used to display webpages is if not using the
+        /// InitializeCoreWebView2Async it will show up a blank
+        /// page instead of the actual website itself.
+        /// </summary>
+        /// <param name="wv"></param>
+        /// <param name="url"></param>
+        /// <param name="userDataFolder"></param>
+        private async void InitializeCoreWebView2Async(WebView2 wv, string url, string userDataFolder)
         {
             CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions();
             CoreWebView2Environment webView2Environment = await CoreWebView2Environment.CreateAsync(null, userDataFolder, options);
@@ -95,21 +111,21 @@ namespace FCLauncher
             LauncherConsole.WriteLineBlue($"[FCLAUNCHER WEBVIEW2] UserDataFolder has been set to: {userDataFolder}");
             lblStatus.Text = $"UserDataFolder has been set to: {userDataFolder}";
 
-            LauncherConsole.WriteLineDarkBlue($"[FCLAUNCHER WEBVIEW2] Loading {wv}...");
-            lblStatus.Text = $"Loading {wv}";
+            LauncherConsole.WriteLineDarkBlue($"[FCLAUNCHER WEBVIEW2] Loading {wv.Name}...");
+            lblStatus.Text = $"Loading {wv.Name}";
 
             try
             {
                 wv.CoreWebView2.Navigate(url);
-                LauncherConsole.WriteLineSuccess($"[FCLAUNCHER WEBVIEW2] Loaded {wv}!");
-                lblStatus.Text = $"Loaded {wv}!";
+                LauncherConsole.WriteLineSuccess($"[FCLAUNCHER WEBVIEW2] Loaded {wv.Name}!");
+                lblStatus.Text = $"Loaded {wv.Name}!";
             }
             catch (Exception ex)
             {
-                LauncherConsole.WriteLineError(1, "[FCLAUNCHER WEBVIEW2 ERROR] An exception has occured while loading the wiki page.");
-                LauncherConsole.WriteLineError(1, "[FCLAUNCHER WEBVIEW2 ERROR] Exception details below this line.");
-                LauncherConsole.WriteLineWarning(1, "-----------------------------------------------------------------");
-                LauncherConsole.WriteLineError(6, $"{ex.InnerException}\n{ex.Message}\n{ex.StackTrace}\n{ex.Source}");
+                LauncherConsole.WriteLineError(1, "[FCLAUNCHER WEBVIEW2 ERROR] An exception has occured while loading the wiki page.", false);
+                LauncherConsole.WriteLineError(1, "[FCLAUNCHER WEBVIEW2 ERROR] Exception details below this line.", false);
+                LauncherConsole.WriteLineWarning(1, "-----------------------------------------------------------------", false);
+                LauncherConsole.WriteLineError(6, $"{ex.InnerException}\n{ex.Message}\n{ex.StackTrace}\n{ex.Source}", false);
             }
             
             lblStatus.Text = "Ready!";
@@ -118,11 +134,17 @@ namespace FCLauncher
         private void FinalInitialization()
         {
             // InitializeWebView2();
-            IntializeCoreWebView2Async(wikiWebView, "https://github.com/Lambdagon/fc/wiki",null);
+            InitializeCoreWebView2Async(wikiWebView, "https://github.com/Lambdagon/fc/wiki", null);
 
             if (!File.Exists("./launcher_cfg.txt"))
             {
                 LauncherConsole.WriteLineBlue("[FCLAUNCHER] launcher_cfg.txt doesn't exist. Make a configuration on the settings page!");
+                DialogResult createCFGDialog = MessageBox.Show("There is no configuration file present in the launcher. Want to make a new configuration now?", "FCLauncher", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(createCFGDialog == DialogResult.Yes)
+                {
+                    menuTabControl.SelectedTab = settingsPage;
+                    menuTabControl.TabIndex = 2;
+                }
             }
             else
             {
@@ -245,29 +267,36 @@ namespace FCLauncher
         {
             launchButton.Enabled = false;
             updateButton.Enabled = false;
-            if (launchBox.Text.Contains("-console"))
+            if (Steam.isSteamInstalled())
             {
-                DialogResult devConsoleEnabled = MessageBox.Show(
-                    "You are trying to run Fortress Connected with -console on your extra launch arguments.\nThis means that your running FC with the developer console and may grant you access to convars that can break the game.\nAre you sure do you want to run the mod with the console?\n(It is recommended to run the mod normally)",
-                    "FCLauncher", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (devConsoleEnabled == DialogResult.Yes)
+                if (launchBox.Text.Contains("-console"))
+                {
+                    DialogResult devConsoleEnabled = MessageBox.Show(
+                        "You are trying to run Fortress Connected with -console on your extra launch arguments.\nThis means that your running FC with the developer console and may grant you access to convars that can break the game.\nAre you sure do you want to run the mod with the console?\n(It is recommended to run the mod normally)",
+                        "FCLauncher", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (devConsoleEnabled == DialogResult.Yes)
+                    {
+                        Core.LaunchFC(launchBox.Text);
+                    }
+                }
+                else if (launchBox.Text.Contains("-dev"))
+                {
+                    DialogResult developerMode = MessageBox.Show(
+                        "You are trying to run Fortress Connected with -dev on your extra launch arguments.\nThis means that your trying running FC with developer mode and may grant you access to developer only convars\nthat can break the game.\nAre you sure do you want to run the mod with developer mode?\n(It is recommended to run the mod normally)",
+                        "FCLauncher", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (developerMode == DialogResult.Yes)
+                    {
+                        Core.LaunchFC(launchBox.Text);
+                    }
+                }
+                else
                 {
                     Core.LaunchFC(launchBox.Text);
                 }
             }
-            else if (launchBox.Text.Contains("-dev"))
+            else
             {
-                DialogResult developerMode = MessageBox.Show(
-                    "You are trying to run Fortress Connected with -dev on your extra launch arguments.\nThis means that your trying running FC with developer mode and may grant you access to developer only convars\nthat can break the game.\nAre you sure do you want to run the mod with developer mode?\n(It is recommended to run the mod normally)",
-                    "FCLauncher", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (developerMode == DialogResult.Yes)
-                {
-                    Core.LaunchFC(launchBox.Text);
-                }
-            }
-            else 
-            {
-                Core.LaunchFC(launchBox.Text);
+                MessageBox.Show("Steam isn't installed\nPlease install Steam and FC's dependencies (Source SDK 2013 Base Multiplayer and TF2) installed.\n(And if everything is installed, make sure that FC is installed.\nYou can install it with Git, GH Desktop or FCDownloader.)", "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
             }
             launchButton.Enabled = true;
             updateButton.Enabled = true;
@@ -283,7 +312,7 @@ namespace FCLauncher
                 lblStatus.Text = "Setting up Git.";
                 Git.SetupGitConfig();
                 lblStatus.Text = "Updating FC";
-                Core.UpdateFC();
+                SModInstaller.UpdateMod("git", null, Core.FCSModPath);
                 
             }
             catch (Exception ex)
@@ -291,10 +320,10 @@ namespace FCLauncher
                 launchButton.Enabled = true;
                 //installButton.Enabled = true;
                 updateButton.Enabled = true;
-                LauncherConsole.WriteLineError(5, "[FCLAUNCHER ERROR] An exception has occured in this application.");
-                LauncherConsole.WriteLineError(5, "[FCLAUNCHER ERROR] Exception details below this line.");
-                LauncherConsole.WriteLineWarning(4, "-----------------------------------------------------------------");
-                LauncherConsole.WriteLineError(6, $"{ex.InnerException}\n{ex.Message}\n{ex.StackTrace}\n{ex.Source}");
+                LauncherConsole.WriteLineError(5, "[FCLAUNCHER ERROR] An exception has occured in this application.", false);
+                LauncherConsole.WriteLineError(5, "[FCLAUNCHER ERROR] Exception details below this line.", false);
+                LauncherConsole.WriteLineWarning(4, "-----------------------------------------------------------------", false);
+                LauncherConsole.WriteLineError(6, $"{ex.Message}\n{ex.StackTrace}\nSource: {ex.Source}", false);
                 MessageBox.Show(
                     "There's an error occured during the update procedure.\nUse --console on your launch arguments for FCLauncher for more information.",
                     "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
