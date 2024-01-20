@@ -118,7 +118,7 @@
             // 
             // btnReportIssueLauncher
             // 
-            this.btnReportIssueLauncher.Location = new System.Drawing.Point(54, 227);
+            this.btnReportIssueLauncher.Location = new System.Drawing.Point(54, 203);
             this.btnReportIssueLauncher.Name = "btnReportIssueLauncher";
             this.btnReportIssueLauncher.Size = new System.Drawing.Size(161, 23);
             this.btnReportIssueLauncher.TabIndex = 3;
@@ -129,9 +129,9 @@
             // 
             this.btnReportIssueMod.Location = new System.Drawing.Point(54, 158);
             this.btnReportIssueMod.Name = "btnReportIssueMod";
-            this.btnReportIssueMod.Size = new System.Drawing.Size(95, 23);
+            this.btnReportIssueMod.Size = new System.Drawing.Size(114, 23);
             this.btnReportIssueMod.TabIndex = 2;
-            this.btnReportIssueMod.Text = "Report an issue";
+            this.btnReportIssueMod.Text = "Report an issue (FC)\r\n";
             this.btnReportIssueMod.UseVisualStyleBackColor = true;
             this.btnReportIssueMod.Click += new System.EventHandler(this.btnReportIssue_Click);
             // 
