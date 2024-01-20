@@ -15,12 +15,14 @@ namespace PracticeMedicine.SourceModInstaller
         static extern bool AttachConsole(int dwProcessId);
         //public static string GitProcessPath = ".\\bin\\git\\cmd\\git.exe";
         private static bool gitsetup;
-        public Git(bool gitsetup)
+        private static bool gitrunning;
+        public Git(bool gitsetup, bool gitrunning)
         {
-            gitsetup = gitsetup;
+            gitsetup = Git.gitsetup;
+            gitrunning = Git.gitrunning;
         }
 
-        public static void StartGit(string args)
+        public static Git StartGit(string args)
         {
             ProcessStartInfo git = new ProcessStartInfo();
             git.Arguments = args;
@@ -28,7 +30,11 @@ namespace PracticeMedicine.SourceModInstaller
             git.UseShellExecute = true;
             git.WorkingDirectory = @".\bin\git\cmd";
             git.FileName = "git.exe";
+            git.RedirectStandardError = true;
+            git.RedirectStandardInput = true;
+            git.RedirectStandardOutput = true;
             Process.Start(git);
+            
 
             // Process[] gitID = Process.GetProcesses();
             //
@@ -40,6 +46,8 @@ namespace PracticeMedicine.SourceModInstaller
             //         AttachConsole(process.Id);
             //     }
             // }
+
+            return new Git(true, true);
         }
 
         public static Git SetupGitConfig()
@@ -49,12 +57,17 @@ namespace PracticeMedicine.SourceModInstaller
             StartGit("config " + "--global " + "core.compression 9");
             StartGit("config " + "--global " + "credential.helper manager-core");
 
-            return new Git(true);
+            return new Git(true, false);
         }
         
         public static bool IsGitSetup()
         {
             return gitsetup;
+        }
+
+        public static bool IsGitRunning()
+        {
+            return gitrunning;
         }
         
         public static void Clone(bool IsShallow, string link, string directory)
