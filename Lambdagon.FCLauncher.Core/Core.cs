@@ -96,7 +96,7 @@ namespace Lambdagon.FCLauncher.Core
 
         public static void InstallFC()
         {
-            if(!IsFCInstalled())
+            if(!Directory.Exists(FCSModPath))
             {
                 // ProgressBar statusForm = new ProgressBar();
                 // statusForm.Show();
@@ -107,7 +107,7 @@ namespace Lambdagon.FCLauncher.Core
                 // statusForm.pBarStatus.Value = 40;
                 // statusForm.lblStatus.Text = "Installing FC...";
                 // statusForm.pBarStatus.Value = 50;
-                Git.Clone(true, "https://github.com/Lambdagon/fc.git", FCSModPath);
+                Git.Clone(true, "https://github.com/Lambdagon/fc.git", "dev", FCSModPath);
                 // statusForm.pBarStatus.Value = 60;
                 // statusForm.pBarStatus.Value = 80;
                 // statusForm.pBarStatus.Value = 90;
@@ -121,18 +121,18 @@ namespace Lambdagon.FCLauncher.Core
             {
                 LauncherConsole.WriteLineError(4,"[FCLAUNCHER CORE] Cannot install FC because Fortress Connected already exists. To update, click the 'Update FC' Button.", true);
                 MessageBox.Show(
-                    "Cannot install FC because Fortress Connected is already installed.\n(The launcher must be placed on the root of the 'fc' directory.)",
+                    "Cannot install FC because Fortress Connected is already installed.",
                     "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         
         public static void UpdateFC()
         { 
-            if(!IsModGameInfoTxtExist())
+            if(!Directory.Exists(FCSModPath))
             {
                 LauncherConsole.WriteLineError(4,"[FCLAUNCHER CORE] Cannot update FC because Fortress Connected is NOT installed. Installing FC will give the exact latest version.", false);
                 MessageBox.Show(
-                    "Cannot update FC because Fortress Connected is NOT installed. Installing FC will give the exact latest version.\n(The launcher must be placed on the root of the 'fc' directory.)",
+                    "Cannot update FC because Fortress Connected is NOT installed. Installing FC will give the exact latest version.",
                     "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
@@ -146,7 +146,7 @@ namespace Lambdagon.FCLauncher.Core
                 // statusForm.pBarStatus.Value = 40;
                 // statusForm.lblStatus.Text = "Updating FC...";
                 // statusForm.pBarStatus.Value = 50;
-                Git.Pull(true, Core.FCSModPath);
+                Git.Pull(true, Core.FCSModPath, "dev");
                 // statusForm.pBarStatus.Value = 60;
                 // statusForm.pBarStatus.Value = 80;
                 // statusForm.pBarStatus.Value = 90;
@@ -159,9 +159,9 @@ namespace Lambdagon.FCLauncher.Core
         
         public static void LaunchFC(string args)
         {
-            if (!IsModGameInfoTxtExist())
+            if (!Directory.Exists(FCSModPath))
             {
-                MessageBox.Show("Cannot launch FC because Fortress Connected is NOT installed. \n(The launcher must be placed on the root of the 'fc' directory.)",
+                MessageBox.Show("Cannot launch FC because Fortress Connected is NOT installed.",
                                 "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else 

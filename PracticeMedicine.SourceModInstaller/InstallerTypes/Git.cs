@@ -24,17 +24,14 @@ namespace PracticeMedicine.SourceModInstaller
 
         public static Git StartGit(string args)
         {
-            ProcessStartInfo git = new ProcessStartInfo();
-            git.Arguments = args;
-            git.CreateNoWindow = false;
-            git.UseShellExecute = true;
-            git.WorkingDirectory = @".\bin\git\cmd";
-            git.FileName = "git.exe";
-            git.RedirectStandardError = true;
-            git.RedirectStandardInput = true;
-            git.RedirectStandardOutput = true;
-            Process.Start(git);
-            
+            Process p = new Process();
+            p.StartInfo.Arguments = args;
+            p.StartInfo.CreateNoWindow = false;
+            p.StartInfo.UseShellExecute = true;
+            p.StartInfo.WorkingDirectory = @".\bin\git\cmd";
+            p.StartInfo.FileName = "git.exe";
+            p.Start();
+            p.WaitForExit();
 
             // Process[] gitID = Process.GetProcesses();
             //
@@ -46,6 +43,8 @@ namespace PracticeMedicine.SourceModInstaller
             //         AttachConsole(process.Id);
             //     }
             // }
+
+            
 
             return new Git(true, true);
         }
@@ -70,83 +69,36 @@ namespace PracticeMedicine.SourceModInstaller
             return gitrunning;
         }
         
-        public static void Clone(bool IsShallow, string link, string directory)
+        public static void Clone(bool IsShallow, string link, string branch, string directory)
         {
             SetupGitConfig();
             if (IsShallow == true)
             {
-                StartGit("clone " + "--depth 1 " + link + " " + directory);
+                StartGit("clone " + "--depth 1 " + "-b " + branch + " --single-branch " + link + " " + directory);
             }
             else
             {
                 //LauncherConsole.WriteLineWarning(4,
                 //    "[FCLAUNCHER CORE] Function 'Clone' has IsShallow set to false! This may cause issues.");
-                StartGit("clone " + link + " " + directory);
+                StartGit("clone " + "-b " + branch + " --single-branch " + link + " " + directory);
             }
-//             if (IsGitSetup())
-//             {
-//                 if (IsShallow == true)
-//                 {
-//                     Process.Start(GitProcessPath, "clone " + "--depth 1 " + link + " " + directory);
-//                 }
-//                 else
-//                 {
-//                     LauncherConsole.WriteLineWarning(
-//                         "[FCLAUNCHER CORE] Function 'Clone' has IsShallow set to false! This may cause issues.");
-//                     Process.Start(GitProcessPath, "clone " + link + " " + directory);
-//                 }
-//             }
-//             else
-//             {
-// #if DEBUG
-//                 throw new WarningException(
-//                     "Git has not been configured by 'public static Git SetupGitConfig()' and may cause issue if without the FCLauncher Git configurations (this includes shallow cloning and pulling)");
-// #else
-//                 MessageBox.Show("Git has not been configured by Lambdagon.FCLauncher.Core's Git class.\nThis may cause issues if the FCLauncher Git configurations are not loaded.\n(includes shallow cloning and pulling)\nContact a developer!");
-// #endif
-//            }
         }
         
-        public static void Pull(bool IsShallow, string directory)
+        public static void Pull(bool IsShallow, string directory, string branch)
         {
             SetupGitConfig();
             if (IsShallow == true)
             {
                 StartGit("-C " + directory + " fetch " + "--depth 1");
-                StartGit("-C " + directory + " reset " + "--hard " + "origin/HEAD");
+                StartGit("-C " + directory + " reset " + "--hard " + "origin/" + branch);
             }
             else
             {
                 //LauncherConsole.WriteLineWarning(4,
                 //    "[FCLAUNCHER CORE] Function 'Pull' has IsShallow set to false! This may cause issues.");
                 StartGit("-C " + directory + " fetch " + "--depth 1");
-                StartGit("-C " + directory + " reset " + "--hard " + "origin/HEAD");
+                StartGit("-C " + directory + " reset " + "--hard " + "origin/" + branch);
             }
-            
-//             if (IsGitSetup())
-//             {
-//                 if (IsShallow == true)
-//                 {
-//                     Process.Start(GitProcessPath, "-C " + directory + " fetch " + "--depth 1");
-//                     Process.Start(GitProcessPath, "-C " + directory + " reset " + "--hard " + "origin/HEAD");
-//                 }
-//                 else
-//                 {
-//                     LauncherConsole.WriteLineWarning(
-//                         "[FCLAUNCHER CORE] Function 'Pull' has IsShallow set to false! This may cause issues.");
-//                     Process.Start(GitProcessPath, "-C " + directory + " fetch " + "--depth 1");
-//                     Process.Start(GitProcessPath, "-C " + directory + " reset " + "--hard " + "origin/HEAD");
-//                 }
-//             }
-//             else
-//             {
-// #if DEBUG
-//                 throw new WarningException(
-//                     "Git has not been configured by 'public static Git SetupGitConfig()' and may cause issue if without the FCLauncher Git configurations (this includes shallow cloning and pulling)");
-// #else
-//                 MessageBox.Show("Git has not been configured by Lambdagon.FCLauncher.Core's Git class.\nThis may cause issues if the FCLauncher Git configurations are not loaded.\n(includes shallow cloning and pulling)\nContact a developer!");
-// #endif                
-//             }
         }
     }
 }

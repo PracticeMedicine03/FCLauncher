@@ -31,6 +31,7 @@
             this.pContainer = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pBarStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.wikiWebView = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.menuTabControl = new System.Windows.Forms.TabControl();
             this.mainPage = new System.Windows.Forms.TabPage();
@@ -40,6 +41,8 @@
             this.launchButton = new System.Windows.Forms.Button();
             this.wikiPage = new System.Windows.Forms.TabPage();
             this.settingsPage = new System.Windows.Forms.TabPage();
+            this.lblDevTest = new System.Windows.Forms.Label();
+            this.btnTest1 = new System.Windows.Forms.Button();
             this.lblDevSettings = new System.Windows.Forms.Label();
             this.btnDevTools = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
@@ -56,7 +59,10 @@
             // 
             // pContainer
             // 
-            this.pContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.pContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pContainer.Controls.Add(this.menuTabControl);
             this.pContainer.Controls.Add(this.statusStrip1);
             this.pContainer.Location = new System.Drawing.Point(-1, -2);
             this.pContainer.Name = "pContainer";
@@ -65,23 +71,34 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.lblStatus });
-            this.statusStrip1.Location = new System.Drawing.Point(0, 542);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatus,
+            this.pBarStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 538);
+            this.statusStrip1.MinimumSize = new System.Drawing.Size(0, 26);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1093, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1093, 26);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // lblStatus
             // 
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(60, 17);
+            this.lblStatus.Size = new System.Drawing.Size(60, 25);
             this.lblStatus.Text = "HeroBrine";
+            // 
+            // pBarStatus
+            // 
+            this.pBarStatus.Name = "pBarStatus";
+            this.pBarStatus.Size = new System.Drawing.Size(150, 24);
+            this.pBarStatus.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
             // wikiWebView
             // 
             this.wikiWebView.AllowExternalDrop = true;
-            this.wikiWebView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.wikiWebView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.wikiWebView.CreationProperties = null;
             this.wikiWebView.DefaultBackgroundColor = System.Drawing.Color.White;
             this.wikiWebView.Location = new System.Drawing.Point(0, 0);
@@ -92,11 +109,13 @@
             // 
             // menuTabControl
             // 
-            this.menuTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.menuTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.menuTabControl.Controls.Add(this.mainPage);
             this.menuTabControl.Controls.Add(this.wikiPage);
             this.menuTabControl.Controls.Add(this.settingsPage);
-            this.menuTabControl.Location = new System.Drawing.Point(0, 37);
+            this.menuTabControl.Location = new System.Drawing.Point(3, 3);
             this.menuTabControl.Name = "menuTabControl";
             this.menuTabControl.SelectedIndex = 0;
             this.menuTabControl.Size = new System.Drawing.Size(1092, 510);
@@ -169,6 +188,8 @@
             // 
             // settingsPage
             // 
+            this.settingsPage.Controls.Add(this.lblDevTest);
+            this.settingsPage.Controls.Add(this.btnTest1);
             this.settingsPage.Controls.Add(this.lblDevSettings);
             this.settingsPage.Controls.Add(this.btnDevTools);
             this.settingsPage.Controls.Add(this.btnSaveConfig);
@@ -182,9 +203,27 @@
             this.settingsPage.Text = "Settings";
             this.settingsPage.UseVisualStyleBackColor = true;
             // 
+            // lblDevTest
+            // 
+            this.lblDevTest.Location = new System.Drawing.Point(9, 67);
+            this.lblDevTest.Name = "lblDevTest";
+            this.lblDevTest.Size = new System.Drawing.Size(198, 14);
+            this.lblDevTest.TabIndex = 8;
+            this.lblDevTest.Text = "Developer Test";
+            // 
+            // btnTest1
+            // 
+            this.btnTest1.Location = new System.Drawing.Point(9, 84);
+            this.btnTest1.Name = "btnTest1";
+            this.btnTest1.Size = new System.Drawing.Size(98, 23);
+            this.btnTest1.TabIndex = 7;
+            this.btnTest1.Text = "WebClient test";
+            this.btnTest1.UseVisualStyleBackColor = true;
+            this.btnTest1.Click += new System.EventHandler(this.btnTest1_Click);
+            // 
             // lblDevSettings
             // 
-            this.lblDevSettings.Location = new System.Drawing.Point(8, 15);
+            this.lblDevSettings.Location = new System.Drawing.Point(9, 15);
             this.lblDevSettings.Name = "lblDevSettings";
             this.lblDevSettings.Size = new System.Drawing.Size(198, 14);
             this.lblDevSettings.TabIndex = 6;
@@ -202,7 +241,7 @@
             // 
             // btnSaveConfig
             // 
-            this.btnSaveConfig.Location = new System.Drawing.Point(442, 111);
+            this.btnSaveConfig.Location = new System.Drawing.Point(442, 214);
             this.btnSaveConfig.Name = "btnSaveConfig";
             this.btnSaveConfig.Size = new System.Drawing.Size(118, 23);
             this.btnSaveConfig.TabIndex = 4;
@@ -212,14 +251,14 @@
             // 
             // launchBox
             // 
-            this.launchBox.Location = new System.Drawing.Point(8, 85);
+            this.launchBox.Location = new System.Drawing.Point(8, 188);
             this.launchBox.Name = "launchBox";
             this.launchBox.Size = new System.Drawing.Size(552, 20);
             this.launchBox.TabIndex = 3;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(9, 68);
+            this.label1.Location = new System.Drawing.Point(9, 171);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(198, 14);
             this.label1.TabIndex = 2;
@@ -230,7 +269,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1088, 557);
-            this.Controls.Add(this.menuTabControl);
             this.Controls.Add(this.pContainer);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -246,7 +284,11 @@
             this.settingsPage.ResumeLayout(false);
             this.settingsPage.PerformLayout();
             this.ResumeLayout(false);
+
         }
+
+        private System.Windows.Forms.Button btnTest1;
+        private System.Windows.Forms.Label lblDevTest;
 
         private System.Windows.Forms.Button btnReportIssueLauncher;
 
@@ -278,6 +320,7 @@
         #endregion
 
         private System.Windows.Forms.Panel pContainer;
+        private System.Windows.Forms.ToolStripProgressBar pBarStatus;
     }
 }
 

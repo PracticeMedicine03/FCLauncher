@@ -14,6 +14,8 @@ using Lambdagon.FCLauncher.Core.CommandLine;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 
+using NLua;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,15 +36,24 @@ using Lambdagon.FCLauncher.Core.Functions;
 
 // PracticeMedicine's SourceMod Installer library
 using PracticeMedicine.SourceModInstaller;
+using NLua.Exceptions;
 
 namespace FCLauncher
 {
     public partial class MainForm : Form
     {
-        #if ENABLE_CEF_MENU
+#if ENABLE_CEF_MENU
         public static ChromiumWebBrowser browser;
-        #endif
+#endif
 
+        public static Lua mainLua;
+        public static string luaDirectory = "./scripts/fclauncher/";
+        public static string luaMedCodeDirectory = "./scripts/medicinecode/";
+        public static string funcDirectory = luaMedCodeDirectory + "/functions/";
+        public static string initFile = luaDirectory + "init.lua";
+        public static string controlFile = funcDirectory + "controls.lua";
+        public static string gitLuaFile = funcDirectory + "git.lua";
+        public static string initBetaFile = luaDirectory + "init_test.lua";
         public MainForm()
         {
             InitializeComponent();
@@ -109,16 +120,16 @@ namespace FCLauncher
             await wv.EnsureCoreWebView2Async(webView2Environment);
 
             LauncherConsole.WriteLineBlue($"[FCLAUNCHER WEBVIEW2] UserDataFolder has been set to: {userDataFolder}");
-            lblStatus.Text = $"UserDataFolder has been set to: {userDataFolder}";
+            //lblStatus.Text = $"UserDataFolder has been set to: {userDataFolder}";
 
             LauncherConsole.WriteLineDarkBlue($"[FCLAUNCHER WEBVIEW2] Loading {wv.Name}...");
-            lblStatus.Text = $"Loading {wv.Name}";
+            //lblStatus.Text = $"Loading {wv.Name}";
 
             try
             {
                 wv.CoreWebView2.Navigate(url);
                 LauncherConsole.WriteLineSuccess($"[FCLAUNCHER WEBVIEW2] Loaded {wv.Name}!");
-                lblStatus.Text = $"Loaded {wv.Name}!";
+                //lblStatus.Text = $"Loaded {wv.Name}!";
             }
             catch (Exception ex)
             {
@@ -127,8 +138,6 @@ namespace FCLauncher
                 LauncherConsole.WriteLineWarning(1, "-----------------------------------------------------------------", false);
                 LauncherConsole.WriteLineError(6, $"{ex.InnerException}\n{ex.Message}\n{ex.StackTrace}\n{ex.Source}", false);
             }
-            
-            lblStatus.Text = "Ready!";
         }
         
         private void FinalInitialization()
@@ -158,6 +167,46 @@ namespace FCLauncher
             Core.InitializeCore();
 
             lblStatus.Text = "Ready!";
+
+            mainLua = new Lua();
+
+            mainLua.LoadCLRPackage();
+
+
+            if (!File.Exists(initFile))
+            {
+                MessageBox.Show("The startup script file is missing or on a different directory!!", "MedicineCode Lua Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+            else
+            {
+                try
+                {
+                    // include the following files just like in roblox
+                    mainLua.DoString(@"
+                                    -- get the contents of the include folder
+                                    require(""./scripts/medicinecode/include/include"")
+                                    ");
+
+                    mainLua.DoFile(controlFile);
+                    mainLua.DoFile(initFile);
+                    mainLua.DoString(@"init()");
+
+                    if (Directory.Exists(luaDirectory + "addons"))
+                    {
+                        mainLua.DoString(@"require(""./scripts/fclauncher/addons"")");
+                    }
+
+                    mainLua.DoFile(gitLuaFile);
+                }
+                catch (LuaScriptException ex)
+                {
+                    //MessageBox.Show($"There is an error trying to run init.lua.\n(Could be an error in the file)\n\n{ex.Message}", "MedicineCode", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    lblStatus.ForeColor = Color.Red;
+                    lblStatus.Text = ex.Message;
+                    Console.Write($"{ex.InnerException}\n{ex.Message}\n{ex.StackTrace}");
+                }
+            }
         }
         
 #if ENABLE_CEF_MENU
@@ -312,7 +361,8 @@ namespace FCLauncher
                 lblStatus.Text = "Setting up Git.";
                 Git.SetupGitConfig();
                 lblStatus.Text = "Updating FC";
-                SModInstaller.UpdateMod("git", null, Core.FCSModPath);
+                SModInstaller.UpdateMod("git", null, "dev", Core.FCSModPath);
+                lblStatus.Text = "Ready!";
                 
             }
             catch (Exception ex)
@@ -362,6 +412,14 @@ namespace FCLauncher
         private void btnReportIssueLauncher_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/PracticeMedicine03/FCLauncher/issues");
+        }
+
+        private void btnTest1_Click(object sender, EventArgs e)
+        {
+            SModInstaller.InstallMod("webclient", "https://practicemedicine03.github.io/practicemedicines-website/repo/pmu/downloads/pmu.zip", null, "./pmu-test.zip");
+
+            pBarStatus.Style = ProgressBarStyle.Blocks;
+            pBarStatus.Value = SModInstaller.progressPercent;
         }
     }
 }
