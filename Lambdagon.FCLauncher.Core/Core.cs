@@ -11,6 +11,8 @@ using Lambdagon.FCLauncher.Core.Functions;
 
 // Both Steam.cs and Git.cs are now in a seperate library.
 using PracticeMedicine.SourceModInstaller;
+using System.Drawing;
+using System.Threading;
 
 namespace Lambdagon.FCLauncher.Core
 {
@@ -20,6 +22,7 @@ namespace Lambdagon.FCLauncher.Core
         private static bool Source2013MPExists;
         private static bool TFExists;
         private static bool IfFCExists;
+        private static bool reinstallfc;
         public static string MainModPath = "../gameinfo.txt";
         public static string FCSModPath = Steam.getSourcemodsFolder() + "/fc";
 
@@ -75,6 +78,11 @@ namespace Lambdagon.FCLauncher.Core
             return GameInfoExists;
         }
 
+        public static bool IsGoingToReinstall()
+        {
+            return reinstallfc;
+        }
+
         public static Core InitializeCore()
         {
             return new Core();
@@ -94,28 +102,14 @@ namespace Lambdagon.FCLauncher.Core
             }
         }
 
-        public static void InstallFC()
+        public static void InstallFC(string branch)
         {
             if(!Directory.Exists(FCSModPath))
             {
-                // ProgressBar statusForm = new ProgressBar();
-                // statusForm.Show();
-                // statusForm.lblStatus.Text = "Installing your game. Please wait...";
-                //
-                // statusForm.pBarStatus.Style = ProgressBarStyle.Blocks;
-                // statusForm.lblStatus.Text = "Setting up Git...";
-                // statusForm.pBarStatus.Value = 40;
-                // statusForm.lblStatus.Text = "Installing FC...";
-                // statusForm.pBarStatus.Value = 50;
-                Git.Clone(true, "https://github.com/Lambdagon/fc.git", "dev", FCSModPath);
-                // statusForm.pBarStatus.Value = 60;
-                // statusForm.pBarStatus.Value = 80;
-                // statusForm.pBarStatus.Value = 90;
-                // statusForm.pBarStatus.Value = 100;
+                Git.Clone(true, "https://github.com/Lambdagon/fc.git", branch, FCSModPath);
 
                 MessageBox.Show("Fortress Connected is installed.\nRestart Steam to play.", "FCLauncher",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // statusForm.Close();
             }
             else
             {
@@ -125,8 +119,67 @@ namespace Lambdagon.FCLauncher.Core
                     "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
-        public static void UpdateFC()
+
+        public static void PostSetupReinstall()
+        {
+            reinstallfc = true;
+        }
+
+        private static void ClearFolder(string FolderName)
+        {
+            DirectoryInfo dir = new DirectoryInfo(FolderName);
+
+            foreach (FileInfo fi in dir.GetFiles())
+            {
+                fi.Delete();
+            }
+
+            foreach (DirectoryInfo di in dir.GetDirectories())
+            {
+                ClearFolder(di.FullName);
+                di.Delete();
+            }
+        }
+
+        public static bool ReinstallFC(string branch = null)
+        {
+            if (Directory.Exists(FCSModPath))
+            {
+                try
+                {
+                    ClearFolder(FCSModPath);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Cannot reinstall Fortress Connected, because one of the mod files are used/opened in another program.\nPlease close the mod or the program that has the mod's main files opened.", "Reinstall FC", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                if(branch == null)
+                    // If the branch string is null, then clone the main branch of the mod.
+                    Git.Clone(true, "https://github.com/Lambdagon/fc.git", "main", FCSModPath);
+                else
+                    Git.Clone(true, "https://github.com/Lambdagon/fc.git", branch, FCSModPath);
+
+                MessageBox.Show("Fortress Connected is reinstalled.\nRestart Steam to play.", "FCLauncher",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                if(Git.git_output_error != null)
+                    return false;
+                else
+                    return true;
+            }
+            else
+            {
+                LauncherConsole.WriteLineError(4, "[FCLAUNCHER CORE] Cannot install FC because Fortress Connected already exists. To update, click the 'Update FC' Button.", true);
+                MessageBox.Show(
+                    "Cannot install FC because Fortress Connected is already installed.",
+                    "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return false;
+            }
+        }
+
+        public static void UpdateFC(string branch)
         { 
             if(!Directory.Exists(FCSModPath))
             {
@@ -137,23 +190,9 @@ namespace Lambdagon.FCLauncher.Core
             }
             else
             {
-                // ProgressBar statusForm = new ProgressBar();
-                // statusForm.Show();
-                // statusForm.lblStatus.Text = "Updating your game. Please wait...";
-                //
-                // statusForm.pBarStatus.Style = ProgressBarStyle.Blocks;
-                // statusForm.lblStatus.Text = "Setting up Git...";
-                // statusForm.pBarStatus.Value = 40;
-                // statusForm.lblStatus.Text = "Updating FC...";
-                // statusForm.pBarStatus.Value = 50;
-                Git.Pull(true, Core.FCSModPath, "dev");
-                // statusForm.pBarStatus.Value = 60;
-                // statusForm.pBarStatus.Value = 80;
-                // statusForm.pBarStatus.Value = 90;
-                // statusForm.pBarStatus.Value = 100;
+                Git.Pull(true, Core.FCSModPath, branch);
                 MessageBox.Show("Fortress Connected is updated.", "FCLauncher",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // statusForm.Close();
             }
         }
         
@@ -164,30 +203,23 @@ namespace Lambdagon.FCLauncher.Core
                 MessageBox.Show("Cannot launch FC because Fortress Connected is NOT installed.",
                                 "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else 
+            else
             {
-                // if (IsBaseSDKInstalled())
-                // {
-                //     if (IsBaseTFInstalled())
-                //     {
-                //         if (Steam.isSteamInstalled())
-                //         {
-                Steam.startAppId(243750, "-game " + Core.FCSModPath + " " + args);
-            //             }
-            //         }
-            //         else
-            //         {
-            //             MessageBox.Show(
-            //                 "Cannot launch FC because the base tool/game isn't installed.\nPlease make sure that 440 (Team Fortress 2) is installed.",
-            //                 "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //         }
-            //     }
-            //     else
-            //     {
-            //         MessageBox.Show(
-            //             "Cannot launch FC because the base tool/game isn't installed.\nPlease make sure that 243750 (Source SDK 2013 Multiplayer) is installed.",
-            //             "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //     }
+                // Check if the game or an another Source engine game is running.
+                Mutex sourceEngineMutex;
+                Mutex.TryOpenExisting("hl2_singleton_mutex", out sourceEngineMutex);
+                if (sourceEngineMutex != null)
+                {
+                    LauncherConsole.WriteLineWarning(1, "[FCLAUNCHER CORE]: the following app returned an warning", false);
+                    LauncherConsole.WriteLineWarning(1, "Returned message: Only one instance of the game can be running at one time.");
+                    MessageBox.Show("Cannot run Fortress Connected, because an another game client is already running.\n(Other Source engine games count. EVEN on an another engine branch.)", "FCLauncher", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    Steam.startAppId(243750, "-game " + Core.FCSModPath + " " + args);
+                }
+
             }
         }
     }

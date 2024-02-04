@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FCLauncher.Beta"
         mc:Ignorable="d"
-        Title="FCLauncher" Height="427" Width="803" WindowStyle="ToolWindow">
+        Title="FCLauncher" Height="427" Width="803" Closing="Window_Closing" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid x:Name="pContainer">
         <TabControl x:Name="tabControl">
             <TabItem Header="Menu">
@@ -17,9 +17,15 @@
             </TabItem>
             <TabItem Header="Settings">
                 <Grid Background="#FFE5E5E5">
-                    <TextBox x:Name="argsTxt" Margin="10,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="594" HorizontalAlignment="Left"/>
-                    <Label Content="Launch Arguments" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="104"/>
-                    <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="40" Click="btnSave_Click"/>
+                    <Label Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="22" FontWeight="Bold"/>
+                    <Label Content="Current branch" HorizontalAlignment="Left" Margin="7,44,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="branchComboSttgs" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="259" SelectionChanged="branchComboSttgs_SelectionChanged">
+                        <ComboBoxItem IsSelected="True" Content="Main (Fortress Connected)"/>
+                        <ComboBoxItem Content="Dev (Fortress Connected Beta)"/>
+                    </ComboBox>
+                    <Label Content="Danger Zone" HorizontalAlignment="Left" Margin="7,102,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="btnReinstall" Content="Reinstall" HorizontalAlignment="Left" Margin="12,128,0,0" VerticalAlignment="Top" Width="74" Click="btnReinstall_Click"/>
+                    <Button x:Name="btnReset" Content="Reset" HorizontalAlignment="Left" Margin="12,151,0,0" VerticalAlignment="Top" Width="74" Click="btnReset_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
