@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Lambdagon.FCLauncher.Core;
+using PracticeMedicine.SourceModInstaller;
+using NLua;
 using DiscordRPC;
 using DiscordRPC.Logging;
 using System.Windows.Controls;
@@ -16,9 +18,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
-using PracticeMedicine.SourceModInstaller;
 using System.Runtime.Remoting.Activation;
 using Lambdagon.FCLauncher.Core.CommandLine;
+using PracticeMedicine.SourceModInstaller.Exceptions;
 
 namespace FCLauncher.Beta
 {
@@ -28,10 +30,13 @@ namespace FCLauncher.Beta
     public partial class MainWindow : Window
     {
         public static DiscordRpcClient client;
+        public static Lua lua;
         public static string appID = "1203189446670028891";
         public MainWindow()
         {
             InitializeComponent();
+
+            lua = new Lua();
 
             if(Directory.Exists(Steam.getSourcemodsFolder() + "/fc"))
             {
@@ -47,7 +52,7 @@ namespace FCLauncher.Beta
 
             if(!Directory.Exists(Core.FCSModPath + "/.git"))
             {
-                MessageBoxResult result = MessageBox.Show("FCLauncher has detected that the Git configuration folder (.git) does NOT exist.\nYou cannot update your mod when '.git' doesn't exist.\nDo you wanna reinstall Fortress Connected?\nThere are common reasons on why this message occurs:\n1. Downloaded FC as an archive (.zip)\n2. Deleted the .git folder.\n", "FCLauncher", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                MessageBoxResult result = MessageBox.Show("FCLauncher has detected that the Git configuration folder (.git) does NOT exist.\nYou cannot update your mod when '.git' doesn't exist.\nDo you wanna reinstall Fortress Connected?\nThere are common reasons on why this message occurs:\n1. Downloaded FC as an archive (.zip)\n2. Deleted the .git folder. (somehow)\n", "FCLauncher", MessageBoxButton.YesNo, MessageBoxImage.Error);
                 if(result == MessageBoxResult.Yes)
                 {
                     Core.PostSetupReinstall();
@@ -57,6 +62,9 @@ namespace FCLauncher.Beta
                     reInstallWindow.Topmost = true;
                 }
             }
+
+            lua.LoadCLRPackage();
+            lua.DoString("");
 
             InitRPC("Main Menu", "Self-explanatory.", null, "idk", null);
 
@@ -71,7 +79,7 @@ namespace FCLauncher.Beta
             }
         }
 
-        private void InitRPC(string details, string state, string largeimage, string largeimagetext, string smallimage)
+        public static void InitRPC(string details, string state, string largeimage, string largeimagetext, string smallimage)
         {
             client = new DiscordRpcClient(appID);
             client.Logger = new ConsoleLogger() { Level = LogLevel.Warning };
@@ -109,7 +117,7 @@ namespace FCLauncher.Beta
             };
         }
 
-        private void ChangeRPCPresence(string details, string state, string largeimage, string largeimagetext, string smallimage)
+        public static void ChangeRPCPresence(string details, string state, string largeimage, string largeimagetext, string smallimage)
         {
             if (!client.IsInitialized)
             {
@@ -159,7 +167,9 @@ namespace FCLauncher.Beta
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            client.Deinitialize();
+            if(client.IsInitialized)
+                client.Deinitialize();
+            Application.Current.Shutdown();
         }
 
         private void branchComboSttgs_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -188,6 +198,11 @@ namespace FCLauncher.Beta
             ResetFilesWindows resetFCWindow = new ResetFilesWindows();
             resetFCWindow.Show();
             resetFCWindow.Topmost = true;
+        }
+
+        private void btnThrowException_Click(object sender, RoutedEventArgs e)
+        {
+            throw new GitException("bruh");
         }
     }
 }

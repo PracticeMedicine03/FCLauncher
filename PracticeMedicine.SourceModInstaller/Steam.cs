@@ -146,11 +146,11 @@ namespace PracticeMedicine.SourceModInstaller
         private static bool updating;
         private static String installationDirectory;
 
-        public InstallationStatus(bool installed, bool updating, String installationDirectory)
+        public InstallationStatus(bool isInstalled, bool isUpdating, String InstallationDirectory)
         {
-            installed = installed;
-            updating = installed ? updating : false; //If it is not installed it cannot be updating so set the flag to false.
-            installationDirectory = installationDirectory;
+            isInstalled = installed;
+            isUpdating = installed ? updating : false; //If it is not installed it cannot be updating so set the flag to false.
+            InstallationDirectory = installationDirectory;
         }
 
         public bool isInstalled()

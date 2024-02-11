@@ -48,6 +48,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\GitException.cs" />
     <Compile Include="Installer.cs" />
     <Compile Include="InstallerTypes\Git.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

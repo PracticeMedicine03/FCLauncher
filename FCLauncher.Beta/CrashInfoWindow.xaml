@@ -1,0 +1,26 @@
+﻿<Window x:Class="FCLauncher.Beta.CrashInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FCLauncher.Beta"
+        mc:Ignorable="d"
+        Title="FCLauncher Crash Handler" Height="503" Width="800" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label Content="The application had encountered and error and needs to be stopped." HorizontalAlignment="Center" Margin="0,24,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+        <Label Content="We're sorry that you have encountered a problem in FCLauncher." HorizontalAlignment="Center" Margin="0,48,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="To help us properly diagnose and fix the problem. Please send us the report." HorizontalAlignment="Center" Margin="0,69,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="Information" HorizontalAlignment="Left" Margin="6,98,0,0" VerticalAlignment="Top"/>
+        <RichTextBox x:Name="errLog" Margin="10,118,10,35">
+            <FlowDocument>
+                <Paragraph>
+                    <Run x:Name="errLogTxt" Text="wrench goes here"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button x:Name="btnClose" Content="Exit" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="60" Click="btnClose_Click"/>
+        <Button x:Name="btnRestart" Content="Restart" HorizontalAlignment="Right" Margin="0,0,75,10" VerticalAlignment="Bottom" Width="60" FontWeight="Bold" Click="btnRestart_Click"/>
+        <Button x:Name="btnContinue" Content="Continue" HorizontalAlignment="Right" Margin="0,0,140,10" VerticalAlignment="Bottom" Width="60" FontWeight="Bold" Foreground="Red" Click="btnContinue_Click"/>
+
+    </Grid>
+</Window>

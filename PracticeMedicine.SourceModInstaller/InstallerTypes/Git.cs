@@ -40,7 +40,7 @@ namespace PracticeMedicine.SourceModInstaller
             p.Start();
             git_output_error = p.StandardError.ReadToEnd();
             git_output_standard = p.StandardOutput.ReadToEnd();
-            p.WaitForExit();
+            //p.WaitForExit();
 
             // Process[] gitID = Process.GetProcesses();
             //
@@ -81,7 +81,7 @@ namespace PracticeMedicine.SourceModInstaller
             return gitrunning;
         }
 
-        public static void Checkout(bool IsShallow, string directory, string branch)
+        public static void Checkout(bool IsShallow, string directory, string branch, string extraArgs = null)
         {
             SetupGitConfig();
             if (IsShallow == true)
@@ -104,29 +104,29 @@ namespace PracticeMedicine.SourceModInstaller
             }
         }
         
-        public static void Clone(bool IsShallow, string link, string branch, string directory)
+        public static void Clone(bool IsShallow, string link, string branch, string directory, string extraArgs = null)
         {
             SetupGitConfig();
             if (IsShallow == true)
             {
-                StartGit("clone " + "--quiet " + "--depth 1 " + "-b " + branch + " --single-branch " + link + " " + $@"""{directory}""");
+                StartGit("clone " + "--quiet " + "--depth 1 " + "-b " + branch + " " + extraArgs + " " + link + " " + $@"""{directory}""");
             }
             else
             {
                 //LauncherConsole.WriteLineWarning(4,
                 //    "[FCLAUNCHER CORE] Function 'Clone' has IsShallow set to false! This may cause issues.");
-                StartGit("clone " + "-b " + branch + " --single-branch " + link + " " + $@"""{directory}""");
+                StartGit("clone " + "-b " + branch + " " + extraArgs + " " + link + " " + $@"""{directory}""");
             }
         }
         
-        public static void Pull(bool IsShallow, string directory, string branch)
+        public static void Pull(bool IsShallow, string directory, string branch, string extraArgs = null)
         {
             SetupGitConfig();
             if (IsShallow == true)
             {
                 StartGit("-C " + $@"""{directory}""" + " fetch " + "--depth 1 " + "--quiet");
                 StartGit("-C " + $@"""{directory}""" + " checkout " + "--quiet " + branch);
-                StartGit("-C " + $@"""{directory}""" + " reset " + "--hard " + "origin/" + branch);
+                StartGit("-C " + $@"""{directory}""" + " reset " + extraArgs + " --hard " + "origin/" + branch);
 
                 //if(git_output_error != null)
                 //    MessageBox.Show("There is an error while trying to call the Pull function.", "PracticeMedicine's SourceModInstaller Library", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -137,20 +137,20 @@ namespace PracticeMedicine.SourceModInstaller
                 //    "[FCLAUNCHER CORE] Function 'Pull' has IsShallow set to false! This may cause issues.");
                 StartGit("-C " + $@"""{directory}""" + " fetch " + "--quiet");
                 StartGit("-C " + $@"""{directory}""" + " checkout " + "--quiet " + branch);
-                StartGit("-C " + $@"""{directory}""" + " reset " + "--quiet " + "--hard " + "origin/" + branch);
+                StartGit("-C " + $@"""{directory}""" + " reset " + "--quiet " + extraArgs + " --hard " + "origin/" + branch);
 
                 //if (git_output_error != null)
                 //    MessageBox.Show("There is an error while trying to call the Pull function.", "PracticeMedicine's SourceModInstaller Library", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        public static void Restore(bool IsShallow, string directory, string branch, string file)
+        public static void Restore(bool IsShallow, string directory, string branch, string file, string extraArgs = null)
         {
             SetupGitConfig();
             if(IsShallow == true)
             {
                 StartGit("-C", directory, "fetch", "--depth 1", "--quiet");
-                StartGit("-C", directory, "restore", "-s", branch, directory + "/" + file, "--quiet");
+                StartGit("-C", directory, "restore", "-s", branch, directory + "/" + file, " --quiet " + extraArgs);
             }
         }
     }

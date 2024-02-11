@@ -35,20 +35,20 @@ namespace FCLauncher.Beta
         {
             if (this.branchCombo.SelectedIndex == 0)
             {
-                this.Height = 201;
+                //this.AnimateWindowSize(ActualWidth, ActualHeight + 58);
                 if(Core.IsGoingToReinstall())
-                    Core.ReinstallFC("main");
+                    Core.ReinstallFC("main", this.extraGitArgsTxt.Text);
                 else
-                    Core.InstallFC("main");
+                    Core.InstallFC("main", this.extraGitArgsTxt.Text);
                 this.Close();
             }
             else if (this.branchCombo.SelectedIndex == 1)
             {
-                this.Height = 201;
+                //this.AnimateWindowSize(ActualWidth + 0, ActualHeight + 58);
                 if (Core.IsGoingToReinstall())
-                    Core.ReinstallFC("dev");
+                    Core.ReinstallFC("dev", this.extraGitArgsTxt.Text);
                 else
-                    Core.InstallFC("dev");
+                    Core.InstallFC("dev", this.extraGitArgsTxt.Text);
                 this.Close();
             }
             else

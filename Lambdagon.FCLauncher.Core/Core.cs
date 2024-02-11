@@ -102,11 +102,11 @@ namespace Lambdagon.FCLauncher.Core
             }
         }
 
-        public static void InstallFC(string branch)
+        public static void InstallFC(string branch, string extraArgs = null)
         {
             if(!Directory.Exists(FCSModPath))
             {
-                Git.Clone(true, "https://github.com/Lambdagon/fc.git", branch, FCSModPath);
+                Git.Clone(true, "https://github.com/Lambdagon/fc.git", branch, FCSModPath, extraArgs);
 
                 MessageBox.Show("Fortress Connected is installed.\nRestart Steam to play.", "FCLauncher",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -141,7 +141,7 @@ namespace Lambdagon.FCLauncher.Core
             }
         }
 
-        public static bool ReinstallFC(string branch = null)
+        public static bool ReinstallFC(string branch = null, string extraArgs = null)
         {
             if (Directory.Exists(FCSModPath))
             {
@@ -151,14 +151,17 @@ namespace Lambdagon.FCLauncher.Core
                 }
                 catch(Exception ex)
                 {
+                    Console.WriteLine(ex.InnerException);
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
                     MessageBox.Show("Cannot reinstall Fortress Connected, because one of the mod files are used/opened in another program.\nPlease close the mod or the program that has the mod's main files opened.", "Reinstall FC", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 if(branch == null)
                     // If the branch string is null, then clone the main branch of the mod.
-                    Git.Clone(true, "https://github.com/Lambdagon/fc.git", "main", FCSModPath);
+                    Git.Clone(true, "https://github.com/Lambdagon/fc.git", "main", FCSModPath, extraArgs);
                 else
-                    Git.Clone(true, "https://github.com/Lambdagon/fc.git", branch, FCSModPath);
+                    Git.Clone(true, "https://github.com/Lambdagon/fc.git", branch, FCSModPath, extraArgs);
 
                 MessageBox.Show("Fortress Connected is reinstalled.\nRestart Steam to play.", "FCLauncher",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -179,7 +182,7 @@ namespace Lambdagon.FCLauncher.Core
             }
         }
 
-        public static void UpdateFC(string branch)
+        public static void UpdateFC(string branch, string extraArgs = null)
         { 
             if(!Directory.Exists(FCSModPath))
             {
@@ -190,7 +193,7 @@ namespace Lambdagon.FCLauncher.Core
             }
             else
             {
-                Git.Pull(true, Core.FCSModPath, branch);
+                Git.Pull(true, Core.FCSModPath, branch, extraArgs);
                 MessageBox.Show("Fortress Connected is updated.", "FCLauncher",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

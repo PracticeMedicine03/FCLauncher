@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FCLauncher.Beta"
         mc:Ignorable="d"
-        Title="Install FC" Height="143" Width="387" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Install FC" Height="270" Width="387" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,10,0,0">
         <ComboBox x:Name="branchCombo" HorizontalAlignment="Center" VerticalAlignment="Top" Width="261" Margin="0,57,0,0">
             <ComboBoxItem x:Name="branchMainComboItem" IsSelected="True">Main (Fortress Connected)</ComboBoxItem>
@@ -14,8 +14,13 @@
         <Label Content="Select a branch that you want to install." HorizontalAlignment="Center" Margin="0,36,0,0" VerticalAlignment="Top"/>
         <Label Content="Install FC" HorizontalAlignment="Left" Margin="0,-10,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnInstall" Content="Install" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="71" IsEnabled="False" Click="btnInstall_Click"/>
-        <ProgressBar HorizontalAlignment="Center" Height="22" Margin="0,134,0,0" VerticalAlignment="Top" Width="261"/>
-        <Label x:Name="lblStatus" Content="Installing." HorizontalAlignment="Center" Margin="0,156,0,0" VerticalAlignment="Top"/>
+        <ProgressBar HorizontalAlignment="Center" Height="22" Margin="0,199,0,0" VerticalAlignment="Top" Width="261"/>
+        <Label x:Name="lblStatus" Content="Installing." HorizontalAlignment="Center" Margin="0,221,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="extraGitArgsTxt" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Margin="47,164,0,0"/>
+        <Label Content="Extra Git Arguments" HorizontalAlignment="Left" Margin="41,144,0,0" VerticalAlignment="Top"/>
+        <Label Content="Danger Zone" HorizontalAlignment="Center" Margin="0,81,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label Content="Anything you edit in this might cause issues with Git." HorizontalAlignment="Left" Margin="43,104,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+        <Label Content="This is used for troubleshooting purposes" HorizontalAlignment="Center" Margin="0,126,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
 
     </Grid>
 </Window>

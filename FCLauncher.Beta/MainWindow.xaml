@@ -26,6 +26,7 @@
                     <Label Content="Danger Zone" HorizontalAlignment="Left" Margin="7,102,0,0" VerticalAlignment="Top"/>
                     <Button x:Name="btnReinstall" Content="Reinstall" HorizontalAlignment="Left" Margin="12,128,0,0" VerticalAlignment="Top" Width="74" Click="btnReinstall_Click"/>
                     <Button x:Name="btnReset" Content="Reset" HorizontalAlignment="Left" Margin="12,151,0,0" VerticalAlignment="Top" Width="74" Click="btnReset_Click"/>
+                    <Button x:Name="btnThrowException" Content="Throw an exception." HorizontalAlignment="Left" Margin="12,176,0,0" VerticalAlignment="Top" Width="110" Click="btnThrowException_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
