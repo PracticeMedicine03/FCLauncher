@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -12,8 +13,8 @@ namespace PracticeMedicine.SourceModInstaller
 {
     public class Git
     {
-        [DllImport("kernel32", SetLastError = true)]
-        static extern bool AttachConsole(int dwProcessId);
+        //[DllImport("kernel32", SetLastError = true)]
+        //static extern bool AttachConsole(int dwProcessId);
         //public static string GitProcessPath = ".\\bin\\git\\cmd\\git.exe";
         private static bool gitsetup;
         private static bool gitrunning;
@@ -25,6 +26,27 @@ namespace PracticeMedicine.SourceModInstaller
         {
             gitsetup = Git.gitsetup;
             gitrunning = Git.gitrunning;
+        }
+
+        public static string GitProcess()
+        {
+            if (!File.Exists($"{Application.StartupPath}/git/cmd/git.exe"))
+                return $"{Application.StartupPath}/git/cmd/git.exe";
+            else
+                return null;
+        }
+
+        public static string GitProcess(string manual_path)
+        {
+            if (!File.Exists($"{Application.StartupPath}/git/cmd/git.exe"))
+                return $"{Application.StartupPath}/git/cmd/git.exe";
+            else if (manual_path != null)
+                if (!File.Exists(manual_path))
+                    return manual_path;
+                else
+                    return null;
+            else
+                return null;
         }
 
         public static Git StartGit(string args1 = null, string args2 = null, string args3 = null, string args4 = null, string args5 = null, string args6 = null, string args7 = null, string args8 = null, string args9 = null, string args10 = null, string args11 = null, string args12 = null)
@@ -42,16 +64,18 @@ namespace PracticeMedicine.SourceModInstaller
             git_output_standard = p.StandardOutput.ReadToEnd();
             //p.WaitForExit();
 
-            // Process[] gitID = Process.GetProcesses();
-            //
-            // foreach (Process process in gitID)
-            // {
-            //     // Check if the process path matches the one we're looking for
-            //     if (process.MainModule.FileName == "./bin/git/cmd/git.exe")
-            //     {
-            //         AttachConsole(process.Id);
-            //     }
-            // }
+            /*
+            Process[] gitID = Process.GetProcesses();
+            
+
+            foreach (Process process in gitID)
+            {
+                 // Check if the process path matches the one we're looking for
+                 if (process.MainModule.FileName == GitProcess())
+                 {
+                     AttachConsole(process.Id);
+                 }
+            }*/
 
             Console.WriteLine(git_output_error);
             Console.WriteLine(git_output_standard);

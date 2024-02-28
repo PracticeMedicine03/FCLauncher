@@ -20,7 +20,6 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Runtime.Remoting.Activation;
 using Lambdagon.FCLauncher.Core.CommandLine;
-using PracticeMedicine.SourceModInstaller.Exceptions;
 
 namespace FCLauncher.Beta
 {
@@ -202,7 +201,7 @@ namespace FCLauncher.Beta
 
         private void btnThrowException_Click(object sender, RoutedEventArgs e)
         {
-            throw new GitException("bruh");
+            throw new PracticeMedicine.SourceModInstaller.Exceptions.GitException("bruh");
         }
     }
 }
