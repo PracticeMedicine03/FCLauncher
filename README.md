@@ -9,6 +9,8 @@ https://stackoverflow.com/questions/73840363/how-do-i-capture-text-from-a-html-e
 
 https://github.com/tf2classic/tf2c-launcher/tree/main/TF2CLauncher/Steam.cs - Configuring some Steam stuff
 
+https://github.com/Squirrel/Squirrel.Windows/issues/979#issuecomment-299047677 - Configuring some Squirrel stuff
+
 ## Codes/Packages used
 - Steam.cs - [tf2c-launcher](https://github.com/tf2classic/tf2c-launcher/tree/main/TF2CLauncher/Steam.cs)
 - [Microsoft.Web.WebView2](https://www.nuget.org/packages/Microsoft.Web.WebView2)
