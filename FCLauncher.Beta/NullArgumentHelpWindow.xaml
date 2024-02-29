@@ -1,4 +1,4 @@
-﻿<Window x:Class="FCLauncher.Beta.NullArgumentHelpWindow"
+<Window x:Class="FCLauncher.Beta.NullArgumentHelpWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,11 @@
         <RichTextBox Margin="0,39,0,36">
             <FlowDocument>
                 <Paragraph>
-                    <Run Text="-h | --help - Shows this window                                                              
+                    <Run Text="sorry for being stubborn
+
+
+
+	                       -h | --help - Shows this window                                                              
                          
                          
                          

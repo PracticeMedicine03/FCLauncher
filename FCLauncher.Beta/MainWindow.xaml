@@ -1,4 +1,4 @@
-﻿<Window x:Class="FCLauncher.Beta.MainWindow"
+<Window x:Class="FCLauncher.Beta.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -17,7 +17,7 @@
             </TabItem>
             <TabItem Header="Settings">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="22" FontWeight="Bold"/>
+                    <Label Content="Settings (my apologies for being stubborn)" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="22" FontWeight="Bold"/>
                     <Label Content="Current branch" HorizontalAlignment="Left" Margin="7,44,0,0" VerticalAlignment="Top"/>
                     <ComboBox x:Name="branchComboSttgs" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="259" SelectionChanged="branchComboSttgs_SelectionChanged">
                         <ComboBoxItem IsSelected="True" Content="Main (Fortress Connected)"/>
