@@ -1,5 +1,9 @@
 # FCLauncher
-![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/PracticeMedicine03/FCLauncher/latest/total)
+**All releases**
+![GitHub Downloads (all assets, all release)](https://img.shields.io/github/downloads/PracticeMedicine03/FCLauncher/total)
+
+**Latest release**
+![GitHub Downloads (all assets, all release)](https://img.shields.io/github/downloads/PracticeMedicine03/FCLauncher/latest/total)
 
 ## About FCLauncher
 FCLauncher is a Sourcemod launcher for a mod named Fortress Connected (formally known as Lambda Fortress: Community Edition). It was inspired by TF2CLauncher and built from scratch (only uses one code file from TF2CLauncher.).
